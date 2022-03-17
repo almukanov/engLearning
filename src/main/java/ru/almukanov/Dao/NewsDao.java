@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class NewsDao {
-    News news;
    /*
     public static HttpURLConnection connection;
     public static JSONArray conn() throws IOException {
@@ -78,33 +77,21 @@ public JSONArray response() throws UnirestException, IOException {
             .header("x-rapidapi-key", "a69f474044msh1879edf3376dcc5p16dc40jsn099b78a44dd9")
             .asString();
     BufferedReader br = new BufferedReader(new InputStreamReader(response.getRawBody()));
-
     String str = br.readLine();
     JSONObject jsonObject = new JSONObject(str);
     JSONArray jsonArray = jsonObject.getJSONArray("articles");
-
     return jsonArray;
-
 }
 
 
     public List<News> takeEngNews() throws IOException, UnirestException {
-       ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
-List<News> news = new ArrayList<>();
-
-Random rand = new Random();
-int randArticle = rand.nextInt(response().length()-1);
-
-
-
+            ObjectMapper mapper = new ObjectMapper();
+            List<News> news = new ArrayList<>();
+            Random rand = new Random();
+            int randArticle = rand.nextInt(response().length()-1);
             JSONObject jsonObject = response().getJSONObject(randArticle);
             news.add(mapper.readValue(jsonObject.toString(),News.class));
-
-
-
-
-
-        return news;
+            return news;
     }
 }
 

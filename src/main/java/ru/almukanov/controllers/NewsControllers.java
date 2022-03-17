@@ -17,11 +17,14 @@ public class NewsControllers {
         this.newsDao = newsDao;
     }
 
-
+@GetMapping("/check")
+    public String checkResult(Model model){
+        return "check";
+    }
 
     @GetMapping("/engNews")
     public String startPage(Model model) throws IOException, UnirestException {
         model.addAttribute("getEngNews", newsDao.takeEngNews());
-        return "/engNews";
+        return "engNews";
     }
 }

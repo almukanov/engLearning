@@ -20,9 +20,20 @@ public class News {
         this.summary = summary;
     }
 
-    public News(String summary) {
-        this.summary = summary;
-    }
 
     private String summary;
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public News(String summary, String title) {
+        this.summary = summary;
+        this.title = title;
+    }
 }
