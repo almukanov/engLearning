@@ -5,6 +5,13 @@
     <title>Title</title>
 </head>
 <body>
+<div style="font-weight: bold;" th:each="news : ${getTitles}">
+    <p> <span th:text="${news.getKey()}">key</span>
+    <a th:href="@{/engNews/{id} (id = ${news.getKey()})}" th:text="${news.getValue().getTitle()}">value</a>
+    </p>
 
+
+
+</div>
 </body>
 </html>

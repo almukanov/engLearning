@@ -12,8 +12,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONString;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.almukanov.Model.News;
+import ru.almukanov.Model.RusNews;
 
 import java.io.*;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 import java.lang.reflect.Array;
@@ -28,6 +30,13 @@ import java.util.stream.Collectors;
 
 @Component
 public class NewsDao {
+    private static int count = 0;
+    private News newsId;
+    private List<News> n;
+    {
+        n = new ArrayList<>();
+    }
+
    /*
     public static HttpURLConnection connection;
     public static JSONArray conn() throws IOException {
@@ -72,8 +81,8 @@ public class NewsDao {
     }
     */
 public JSONArray response() throws UnirestException, IOException {
-    HttpResponse<String> response = Unirest.get("https://newscatcher.p.rapidapi.com/v1/search_free?q=Elon%20Musk&lang=en&media=True")
-            .header("x-rapidapi-host", "newscatcher.p.rapidapi.com")
+    HttpResponse<String> response = Unirest.get("https://free-news.p.rapidapi.com/v1/search?q=Elon%20Musk&lang=en")
+            .header("x-rapidapi-host", "free-news.p.rapidapi.com")
             .header("x-rapidapi-key", "a69f474044msh1879edf3376dcc5p16dc40jsn099b78a44dd9")
             .asString();
     BufferedReader br = new BufferedReader(new InputStreamReader(response.getRawBody()));
@@ -83,16 +92,61 @@ public JSONArray response() throws UnirestException, IOException {
     return jsonArray;
 }
 
+public JSONArray translate(String string) throws UnirestException, IOException {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("q=").append(string).append("&target=ru&source=en");
+    HttpResponse<String> response = Unirest.post("https://google-translate1.p.rapidapi.com/language/translate/v2")
+            .header("content-type", "application/x-www-form-urlencoded")
+            .header("accept-encoding", "application/gzip")
+            .header("x-rapidapi-host", "google-translate1.p.rapidapi.com")
+            .header("x-rapidapi-key", "a69f474044msh1879edf3376dcc5p16dc40jsn099b78a44dd9")
+            .body(stringBuilder.toString())
+            .asString();
+    BufferedReader br = new BufferedReader(new InputStreamReader(response.getRawBody()));
+    String str = br.readLine();
+    JSONObject jsonObject = new JSONObject(str);
+    JSONArray jsonArray = jsonObject.getJSONObject("data").getJSONArray("translations");
+    return jsonArray;
+}
 
-    public List<News> takeEngNews() throws IOException, UnirestException {
+
+    public List<News> takeEngNews(int id) throws IOException, UnirestException {
             ObjectMapper mapper = new ObjectMapper();
             List<News> news = new ArrayList<>();
-            Random rand = new Random();
-            int randArticle = rand.nextInt(response().length()-1);
-            JSONObject jsonObject = response().getJSONObject(randArticle);
+           // Random rand = new Random();
+            //int randArticle = rand.nextInt(response().length()-1);
+            //TODO checking news using title
+            JSONObject jsonObject = response().getJSONObject(id);
             news.add(mapper.readValue(jsonObject.toString(),News.class));
             return news;
     }
+
+    public HashMap<Integer, News> takeAllnews() throws IOException, UnirestException {
+        ObjectMapper mapper = new ObjectMapper();
+    JSONArray jsonArray = response();
+    //List<String> list = new ArrayList<>();
+        HashMap<Integer,News> news = new HashMap<>();
+        int id = 0;
+        for (int i = 0; i < 10; i++)
+        {
+
+            try {
+                JSONObject obj = jsonArray.getJSONObject(i);
+                news.put(i,mapper.readValue(obj.toString(),News.class));
+
+                //String title = obj.getString("title");
+               // n.add(new News(count, title));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return news;
+    }
+
+
+
 }
 
 
