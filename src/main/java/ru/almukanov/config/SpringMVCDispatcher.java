@@ -20,7 +20,7 @@ public class SpringMVCDispatcher extends AbstractAnnotationConfigDispatcherServl
     }
 
     @Override
-    public void onStartup(ServletContext aServletContext) throws ServletException, ServletException {
+    public void onStartup(ServletContext aServletContext) throws ServletException {
         super.onStartup(aServletContext);
         registerHiddenFieldFilter(aServletContext);
     }

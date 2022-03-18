@@ -1,17 +1,14 @@
 package ru.almukanov.controllers;
 
-import com.fasterxml.jackson.databind.node.TextNode;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.json.JSONObject;
-import org.json.JSONString;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import ru.almukanov.Dao.NewsDao;
 import ru.almukanov.Dao.TranslateDao;
-import ru.almukanov.Model.News;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
