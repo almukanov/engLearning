@@ -1,6 +1,10 @@
 package ru.almukanov.controllers;
 
+import com.fasterxml.jackson.databind.node.TextNode;
+import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +12,8 @@ import ru.almukanov.Dao.NewsDao;
 import ru.almukanov.Dao.TranslateDao;
 import ru.almukanov.Model.News;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 
@@ -36,9 +41,16 @@ public class NewsControllers {
 
 
     @PostMapping ("/check")
-    public String translateEnRu(Model model) throws UnirestException, IOException {
+    public String translateEnRu(Model model, @ModelAttribute("myTranslate") String str) throws UnirestException, IOException {
         model.addAttribute("translateEnRu", translateDao.translate(newsDao.takeNewsFromList().getSummary()));
         model.addAttribute("getOneNews", newsDao.takeNewsFromList());
+        //encoding to ISO_8859_1
+        InputStream inputStream = new ByteArrayInputStream(str.getBytes(StandardCharsets.ISO_8859_1));
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        // end encoding
+        String string = br.readLine();
+        model.addAttribute("getMyTranslate", string);
+
       return "check";
     }
 
