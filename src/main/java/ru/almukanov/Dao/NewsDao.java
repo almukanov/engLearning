@@ -32,11 +32,28 @@ import java.util.stream.Collectors;
 public class NewsDao {
     private static int count = 0;
     private News newsId;
-    private List<News> n;
-    {
-        n = new ArrayList<>();
-    }
+    private News[] n;
 
+    {
+        n = new News[1];
+
+    }
+    /*public JSONArray translate(String string) throws UnirestException, IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("q=").append(string).append("&target=ru&source=en");
+        HttpResponse<String> response = Unirest.post("https://google-translate1.p.rapidapi.com/language/translate/v2")
+                .header("content-type", "application/x-www-form-urlencoded")
+                .header("accept-encoding", "application/gzip")
+                .header("x-rapidapi-host", "google-translate1.p.rapidapi.com")
+                .header("x-rapidapi-key", "a69f474044msh1879edf3376dcc5p16dc40jsn099b78a44dd9")
+                .body(stringBuilder.toString())
+                .asString();
+        BufferedReader br = new BufferedReader(new InputStreamReader(response.getRawBody()));
+        String str = br.readLine();
+        JSONObject jsonObject = new JSONObject(str);
+        JSONArray jsonArray = jsonObject.getJSONObject("data").getJSONArray("translations");
+        return jsonArray;
+    }
    /*
     public static HttpURLConnection connection;
     public static JSONArray conn() throws IOException {
@@ -80,7 +97,7 @@ public class NewsDao {
         return jsonArray;
     }
     */
-public JSONArray response() throws UnirestException, IOException {
+    public JSONArray response() throws UnirestException, IOException {
     HttpResponse<String> response = Unirest.get("https://free-news.p.rapidapi.com/v1/search?q=Elon%20Musk&lang=en")
             .header("x-rapidapi-host", "free-news.p.rapidapi.com")
             .header("x-rapidapi-key", "a69f474044msh1879edf3376dcc5p16dc40jsn099b78a44dd9")
@@ -92,60 +109,40 @@ public JSONArray response() throws UnirestException, IOException {
     return jsonArray;
 }
 
-public JSONArray translate(String string) throws UnirestException, IOException {
-    StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("q=").append(string).append("&target=ru&source=en");
-    HttpResponse<String> response = Unirest.post("https://google-translate1.p.rapidapi.com/language/translate/v2")
-            .header("content-type", "application/x-www-form-urlencoded")
-            .header("accept-encoding", "application/gzip")
-            .header("x-rapidapi-host", "google-translate1.p.rapidapi.com")
-            .header("x-rapidapi-key", "a69f474044msh1879edf3376dcc5p16dc40jsn099b78a44dd9")
-            .body(stringBuilder.toString())
-            .asString();
-    BufferedReader br = new BufferedReader(new InputStreamReader(response.getRawBody()));
-    String str = br.readLine();
-    JSONObject jsonObject = new JSONObject(str);
-    JSONArray jsonArray = jsonObject.getJSONObject("data").getJSONArray("translations");
-    return jsonArray;
-}
 
+
+public News takeNewsFromList(){
+        News news = n[0];
+        return news;
+}
 
     public List<News> takeEngNews(int id) throws IOException, UnirestException {
             ObjectMapper mapper = new ObjectMapper();
             List<News> news = new ArrayList<>();
-           // Random rand = new Random();
-            //int randArticle = rand.nextInt(response().length()-1);
-            //TODO checking news using title
             JSONObject jsonObject = response().getJSONObject(id);
-            news.add(mapper.readValue(jsonObject.toString(),News.class));
+            News engNews = mapper.readValue(jsonObject.toString(),News.class);
+            news.add(engNews);
+            n[0] = engNews;
             return news;
     }
 
     public HashMap<Integer, News> takeAllnews() throws IOException, UnirestException {
-        ObjectMapper mapper = new ObjectMapper();
+    ObjectMapper mapper = new ObjectMapper();
     JSONArray jsonArray = response();
-    //List<String> list = new ArrayList<>();
         HashMap<Integer,News> news = new HashMap<>();
         int id = 0;
         for (int i = 0; i < 10; i++)
         {
-
             try {
                 JSONObject obj = jsonArray.getJSONObject(i);
                 news.put(i,mapper.readValue(obj.toString(),News.class));
 
-                //String title = obj.getString("title");
-               // n.add(new News(count, title));
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
         return news;
     }
-
-
 
 }
 

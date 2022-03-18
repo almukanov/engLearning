@@ -1,16 +1,11 @@
 package ru.almukanov.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 import ru.almukanov.Dao.NewsDao;
+import ru.almukanov.Dao.TranslateDao;
 import ru.almukanov.Model.News;
 
 import java.io.IOException;
@@ -20,9 +15,12 @@ import java.io.IOException;
 public class NewsControllers {
 
     private final NewsDao newsDao;
-    public NewsControllers(NewsDao newsDao) {
+    private final TranslateDao translateDao;
+    public NewsControllers(NewsDao newsDao, TranslateDao translateDao) {
         this.newsDao = newsDao;
+        this.translateDao = translateDao;
     }
+
 
     @GetMapping
     public String index(Model model) throws UnirestException, IOException {
@@ -35,9 +33,13 @@ public class NewsControllers {
         model.addAttribute("getEngNews", newsDao.takeEngNews(id));
         return "engNews";
     }
-    @GetMapping("/check")
-    public String checkResult(Model model) throws UnirestException, IOException {
-    model.addAttribute("getRusNews", newsDao.takeEngNews(1));
-        return "check";
+
+
+    @PostMapping ("/check")
+    public String translateEnRu(Model model) throws UnirestException, IOException {
+        model.addAttribute("translateEnRu", translateDao.translate(newsDao.takeNewsFromList().getSummary()));
+        model.addAttribute("getOneNews", newsDao.takeNewsFromList());
+      return "check";
     }
+
 }

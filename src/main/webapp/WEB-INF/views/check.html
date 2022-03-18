@@ -6,25 +6,8 @@
     <title>English learning</title>
 </head>
 <body>
-<form action="/check" method="post">
-    <label for="exampleFormControlTextarea1" class="form-label" th:name="label-eng">
-        <div class="mb-3">
-            <div style="font-weight: bold;" th:each="news : ${getEngNews}">
-                <p th:text="${news.getTitle()}">
-                    title
-                </p>
-            </div>
-            <div th:each="news : ${getEngNews}">
-                <p th:text="${news.getSummary()}">
-                    article
-                </p>
-            </div>
-        </div>
-    </label>
-    <div class="mb-3">
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        <input type="submit" class="button">
-    </div>
-</form>
+<div th:text="${getOneNews.getSummary()}">text</div>
+<hr>
+<div th:text="${translateEnRu}">textw</div>
 </body>
 </html>
