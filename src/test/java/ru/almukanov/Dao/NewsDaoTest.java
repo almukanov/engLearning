@@ -26,6 +26,6 @@ public class NewsDaoTest {
 
     @Test
     public void checkStatus() throws UnirestException, IOException {
-        assertTrue(newsDao.response().length()!=0);
+        assertTrue(newsDao.response().length()!=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           );
     }
 }
