@@ -1,18 +1,23 @@
 package ru.almukanov.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import org.json.JSONArray;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
+@Component
 public class News {
-    private String summary;
+    private String text;
     private String title;
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     private int id;
 
     public int getId() {
@@ -28,12 +33,12 @@ public class News {
         this.id = id;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getText() {
+        return text;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getTitle() {
@@ -51,8 +56,12 @@ public class News {
     public News() {
     }
 
-    public News(String summary, String title) {
-        this.summary = summary;
+    public News(String message) {
+        this.message = message;
+    }
+
+    public News(String title, String text) {
+        this.text = text;
         this.title = title;
     }
 }

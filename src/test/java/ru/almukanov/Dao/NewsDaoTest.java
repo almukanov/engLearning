@@ -16,6 +16,7 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class NewsDaoTest {
+    /*
     NewsDao newsDao;
     @Before
     public void newsDaoObject() throws UnirestException, IOException {
@@ -28,4 +29,6 @@ public class NewsDaoTest {
     public void checkStatus() throws UnirestException, IOException {
         assertTrue(newsDao.response().length()!=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           );
     }
+
+     */
 }
