@@ -36,10 +36,10 @@ private  News news;
     public String index(@RequestParam("url") String url,  Model model) throws UnirestException, IOException {
         news.setTitle(newsService.response(url).getString("title"));
         news.setText(newsService.response(url).getString("text"));
-       // String translateTitle = newsService.translate(newsService.response(url).getString("title"));
-       //String translateText = newsService.translate(newsService.response(url).getString("text"));
-       autoTranslate.setTitle("Hello");
-       autoTranslate.setText("Wortld");
+       String translateTitle = newsService.translate(newsService.response(url).getString("title"));
+       String translateText = newsService.translate(newsService.response(url).getString("text"));
+       autoTranslate.setTitle(translateTitle);
+       autoTranslate.setText(translateText);
        model.addAttribute("getTranslatedArticle",autoTranslate);
         return "getArticle";
     }
