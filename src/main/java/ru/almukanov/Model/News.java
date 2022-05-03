@@ -48,18 +48,11 @@ public class News {
     public void setTitle(String title) {
         this.title = title;
     }
-
-
-
-
-
     public News() {
     }
-
     public News(String message) {
         this.message = message;
     }
-
     public News(String title, String text) {
         this.text = text;
         this.title = title;

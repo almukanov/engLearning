@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @Component
-public class TranslateDao {
+public class TranslateDaoImpl implements TranslateDao{
     public String translate(String string) throws UnirestException, IOException {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("source=en&target=ru&q=").append(string);
@@ -22,7 +22,7 @@ public class TranslateDao {
                 .body(stringBuilder.toString())
                 .asString();
         BufferedReader br = new BufferedReader(new InputStreamReader(response.getRawBody()));
-        String str = br.readLine();
+        String str = br. readLine();
         JSONObject jsonObject = new JSONObject(str);
         return jsonObject.getJSONObject("data").getJSONArray("translations").getJSONObject(0).getString("translatedText");
     }

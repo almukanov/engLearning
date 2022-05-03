@@ -19,7 +19,7 @@ import java.util.List;
 
 @Component
 public interface NewsDao {
-    JSONObject  response() throws UnirestException;
+    JSONObject  response(String url) throws UnirestException;
 }
 
 

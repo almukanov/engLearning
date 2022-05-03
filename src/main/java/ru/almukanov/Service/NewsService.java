@@ -14,7 +14,8 @@ import java.util.HashMap;
 
 @Service
 public interface NewsService {
-        JSONObject response() throws UnirestException, IOException;
+        JSONObject response(String url) throws UnirestException, IOException;
+        String translate(String string) throws UnirestException, IOException;
 
 
 }

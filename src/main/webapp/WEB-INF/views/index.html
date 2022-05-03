@@ -6,14 +6,12 @@
 </head>
 <body>
 <div>
-    <p> <span th:text="${getArticle.getTitle()}">key</span>
-        <br>
-        <br>
-        <span th:text="${getArticle.getText()}">value</span>
-
-    </p>
-
-
+    <form action="get-article" method="post">
+        <label>
+            <input type="text" name = "url" />
+        </label>
+        <input type="submit" value="add url" />
+    </form>
 
 </div>
 </body>
