@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table th:border="2px">
+    <tr>
+        <td>
+            <span th:text="${autoTranslate.getTitle()}">title</span>
+            <br>
+            <span th:text="${autoTranslate.getText()}">text</span>
+        </td>
+    </tr>
+<tr>
+    <td>
+    <span th:text="${translatedText.getTitle()}" >title</span>
+
+    <br>
+    <span th:text="${translatedText.getText()}">text</span>
+    </td>
+    <td>
+        <span th:text="${originText.getTitle()}">title</span>
+        <br>
+        <span th:text="${originText.getText()}">text</span>
+    </td>
+</tr>
+</table>
+</body>
+</html>

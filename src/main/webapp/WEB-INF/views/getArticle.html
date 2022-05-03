@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <p>
+        <span th:text="${getTranslatedArticle.getTitle()}">key</span>
+        <br>
+        <br>
+        <span th:text="${getTranslatedArticle.getText()}">value</span>
+
+    </p>
+    <p>
+        <form action="check-translate" method="post">
+    <label>
+        <input type="text" width="300" height="200" name="userTitle" />
+    </label>
+            <label>
+                <input type="text"  width="300" height="200" name="userText" />
+            </label>
+                <input type="submit" value="Check translate">
+        </form>
+    </p>
+</div>
+</body>
+</html>
